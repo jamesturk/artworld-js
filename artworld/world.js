@@ -21,25 +21,28 @@ export class World {
   }
 
   draw() {
-    for (let d of this.drawables) {
+    for (let d of this.drawables.sort((a, b) => a._z_index - b._z_index)) {
       d.draw();
     }
   }
 
   // Canvas 2D /////////////////
 
-  setStrokeWeight(scalar) {
-    this.ctx.lineWidth = scalar;
-  }
-
-  setStrokeColor(color) {
-    if (color && color.toStr) this.ctx.strokeStyle = color.toStr();
-    else this.ctx.strokeStyle = color;
-  }
-
-  setFillColor(color) {
-    if (color && color.toStr) this.ctx.fillStyle = color.toStr();
-    else this.ctx.fillStyle = color;
+  prepareDraw(drawable) {
+    this._stroke = false;
+    this._fill = false;
+    if (drawable._stroke) {
+      this.ctx.lineWidth = drawable._strokeWidth;
+      this.ctx.strokeStyle = drawable._stroke.toStr
+        ? drawable._stroke.toStr()
+        : drawble._stroke;
+      this._stroke = true;
+    } else if (drawable._fill) {
+      this.ctx.fillStyle = drawable._fill.toStr
+        ? drawable._fill.toStr()
+        : drawable._fill;
+      this._fill = true;
+    }
   }
 
   drawLine(from, to) {
@@ -52,15 +55,15 @@ export class World {
   drawArc(center, radius, fromAngle, toAngle) {
     this.ctx.beginPath();
     this.ctx.arc(center.x, center.y, radius, fromAngle, toAngle);
-    this.ctx.stroke();
-    this.ctx.fill();
+    if (this._stroke) this.ctx.stroke();
+    if (this._fill) this.ctx.fill();
   }
 
   drawRect(center, width, height) {
     this.ctx.beginPath();
     this.ctx.rect(center.x - width / 2, center.y - height / 2, width, height);
-    this.ctx.fill();
-    this.ctx.stroke();
+    if (this._stroke) this.ctx.stroke();
+    if (this._fill) this.ctx.fill();
   }
 }
 

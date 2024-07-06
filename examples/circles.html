@@ -1,0 +1,38 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Circle,
+        Random,
+        Vector2,
+        degToRad,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      function* color_cycle() {
+        while (true) {
+          yield Pico8.RED;
+          yield Pico8.ORANGE;
+          yield Pico8.YELLOW;
+        }
+      }
+      let cycle = color_cycle();
+
+      let g = new Group().pos(new Vector2(250, 250));
+      for (let r = 20; r < 100; r += 12) {
+        new Circle(g).radius(r).fill(cycle.next().value).z(-r).strokeWeight(0);
+      }
+      for (let r = 100; r < 250; r += 12) {
+        new Circle(g).radius(r).fill(cycle.next().value).z(-r).strokeWeight(0);
+      }
+      artworld.draw();
+    </script>
+  </body>
+</html>

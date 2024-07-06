@@ -5,7 +5,6 @@ export class Random {
 
   static under(num) {
     let n = Math.random() * num;
-    console.log("under", num, n);
     return n;
   }
 

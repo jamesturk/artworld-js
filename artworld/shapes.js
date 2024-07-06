@@ -34,9 +34,7 @@ export class Arc extends Drawable {
   }
 
   draw() {
-    artworld.setStrokeColor(this._stroke);
-    artworld.setStrokeWeight(this._strokeWeight);
-    artworld.setFillColor(this._fill);
+    artworld.prepareDraw(this);
     artworld.drawArc(this.worldPos, this._r, this._startAngle, this._endAngle);
   }
 
@@ -61,10 +59,8 @@ export class Circle extends Drawable {
   }
 
   draw() {
-    artworld.setStrokeColor(this._stroke);
-    artworld.setStrokeWeight(this._strokeWeight);
-    artworld.setFillColor(this._fill);
-    artworld.drawArc(this.worldPos, this._r, 0, 360);
+    artworld.prepareDraw(this);
+    artworld.drawArc(this.worldPos, this._r, 0, 2 * Math.PI);
   }
 
   radius(scalar) {
@@ -88,9 +84,7 @@ export class Rect extends Drawable {
   }
 
   draw() {
-    artworld.setStrokeColor(this._stroke);
-    artworld.setStrokeWeight(this._strokeWeight);
-    artworld.setFillColor(this._fill);
+    artworld.prepareDraw(this);
     artworld.drawRect(this.worldPos, this._width, this._height);
   }
 

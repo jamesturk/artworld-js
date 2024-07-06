@@ -29,7 +29,7 @@ export class Drawable {
   }
 
   draw() {
-    // TODO: log/raise?
+    // no-op, maybe log?
   }
 
   // setters
@@ -80,7 +80,6 @@ export class Drawable {
       Random.under(artworld.width),
       Random.under(artworld.height),
     );
-    console.log(this._posVec);
     this._stroke = new Color(
       Random.under(360),
       Random.between(30, 60),
