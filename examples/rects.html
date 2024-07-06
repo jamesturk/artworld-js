@@ -1,0 +1,28 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Rect,
+        Random,
+        Vector2,
+        degToRad,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      for (let i = 0; i < 50; i++) {
+        new Rect().random(200).fill(Pico8.BLACK).z(10);
+        new Rect().random(150).fill(Pico8.DARK_BLUE).z(15);
+        new Rect().random(100).fill(Pico8.DARK_GREY).z(20);
+        new Rect().random(50).fill(Pico8.LIGHT_GREY).z(30);
+      }
+      artworld.draw();
+    </script>
+  </body>
+</html>

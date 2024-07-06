@@ -1,5 +1,7 @@
-import { Vector2 } from "./math.js";
 import { artworld } from "./world.js";
+import { Vector2 } from "./math.js";
+import { Color } from "./color.js";
+import { Random } from "./random.js";
 
 export class Drawable {
   constructor(parent) {
@@ -73,8 +75,24 @@ export class Drawable {
     this._posVec = this._posVec.add(byVec);
   }
 
-  // TODO random()
-  // TODO draw() abstract
+  random() {
+    this._posVec = new Vector2(
+      Random.under(artworld.width),
+      Random.under(artworld.height),
+    );
+    console.log(this._posVec);
+    this._stroke = new Color(
+      Random.under(360),
+      Random.between(30, 60),
+      Random.between(30, 60),
+    );
+    this._fill = new Color(
+      Random.under(360),
+      Random.between(30, 60),
+      Random.between(30, 60),
+    );
+    return this;
+  }
 
   // getters /////////////////////////////
 

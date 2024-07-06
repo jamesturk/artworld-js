@@ -8,6 +8,14 @@ export class World {
     this.ctx = document.getElementById(id).getContext("2d");
   }
 
+  get width() {
+    return this.ctx.canvas.width;
+  }
+
+  get height() {
+    return this.ctx.canvas.height;
+  }
+
   register(drawable) {
     this.drawables.push(drawable);
   }
@@ -34,18 +42,24 @@ export class World {
     else this.ctx.fillStyle = color;
   }
 
-  fillRect(rect) {
-    this.ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
-  }
-
-  strokeRect(rect) {
-    this.ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
-  }
-
   drawLine(from, to) {
     this.ctx.beginPath();
     this.ctx.moveTo(from.x, from.y);
     this.ctx.lineTo(to.x, to.y);
+    this.ctx.stroke();
+  }
+
+  drawArc(center, radius, fromAngle, toAngle) {
+    this.ctx.beginPath();
+    this.ctx.arc(center.x, center.y, radius, fromAngle, toAngle);
+    this.ctx.stroke();
+    this.ctx.fill();
+  }
+
+  drawRect(center, width, height) {
+    this.ctx.beginPath();
+    this.ctx.rect(center.x - width / 2, center.y - height / 2, width, height);
+    this.ctx.fill();
     this.ctx.stroke();
   }
 }
