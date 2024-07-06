@@ -1,0 +1,19 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="800" height="800"></canvas>
+    <script type="module">
+      import { artworld, Color, Line, Vector2 } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+      for (let i = 0; i < 10; i++) {
+        new Line()
+          .pos(new Vector2(5 * i * 14, 5))
+          .to(new Vector2(5 * i * 14, 140))
+          .stroke(new Color(20 * i, 50, 50))
+          .strokeWeight(1 + i);
+      }
+      artworld.draw();
+    </script>
+  </body>
+</html>
