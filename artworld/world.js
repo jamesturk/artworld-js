@@ -25,11 +25,13 @@ export class World {
   }
 
   setStrokeColor(color) {
-    this.ctx.strokeStyle = color.toStr();
+    if (color && color.toStr) this.ctx.strokeStyle = color.toStr();
+    else this.ctx.strokeStyle = color;
   }
 
   setFillColor(color) {
-    this.ctx.fillStyle = color.toStr();
+    if (color && color.toStr) this.ctx.fillStyle = color.toStr();
+    else this.ctx.fillStyle = color;
   }
 
   fillRect(rect) {

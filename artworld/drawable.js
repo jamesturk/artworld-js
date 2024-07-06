@@ -15,7 +15,7 @@ export class Drawable {
 
   _register() {
     if (this._parent) {
-      this._parent.push(this);
+      this._parent._register(this);
     }
     artworld.register(this);
   }
@@ -25,6 +25,12 @@ export class Drawable {
     obj._register();
     return obj;
   }
+
+  draw() {
+    // TODO: log/raise?
+  }
+
+  // setters
 
   fill(color) {
     this._fill = color;
@@ -73,7 +79,10 @@ export class Drawable {
   // getters /////////////////////////////
 
   get worldPos() {
-    return this._parent ? this._parent.worldPos.add(this._pos) : this._pos;
+    // offset from parent if needed
+    return this._parent
+      ? this._parent.worldPos.add(this._posVec)
+      : this._posVec;
   }
 }
 

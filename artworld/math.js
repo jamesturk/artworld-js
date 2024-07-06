@@ -1,4 +1,12 @@
-export const TO_RADIANS = 180 / Math.PI;
+const PI_180 = Math.PI / 180;
+
+export function degToRad(degrees) {
+  return degrees * PI_180;
+}
+
+export function radToDeg(rad) {
+  return rad / PI_1i0;
+}
 
 export class Vector2 {
   constructor(x, y) {
@@ -7,15 +15,15 @@ export class Vector2 {
   }
 
   add(other) {
-    return Vector2(this.x + other.x, this.y + other.y);
+    return new Vector2(this.x + other.x, this.y + other.y);
   }
 
   sub(other) {
-    return Vector2(this.x - other.x, this.y - other.y);
+    return new Vector2(this.x - other.x, this.y - other.y);
   }
 
   scale(s) {
-    return Vector2(s * this.x, s * this.y);
+    return new Vector2(s * this.x, s * this.y);
   }
 
   static random(x, y) {
@@ -28,10 +36,10 @@ export class Vector2 {
     if (y === undefined) {
       y = x;
     }
-    return Vector2(x * cos(theta), y * sin(theta));
+    return new Vector2(x * cos(theta), y * sin(theta));
   }
 
   static polar(mag, angle) {
-    return Vector2(mag * Math.cos(angle), mag * Math.sin(angle));
+    return new Vector2(mag * Math.cos(angle), mag * Math.sin(angle));
   }
 }
