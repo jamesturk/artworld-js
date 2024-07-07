@@ -32,10 +32,10 @@ export class World {
     this._stroke = false;
     this._fill = false;
     if (drawable._stroke) {
-      this.ctx.lineWidth = drawable._strokeWidth;
+      this.ctx.lineWidth = drawable._strokeWeight;
       this.ctx.strokeStyle = drawable._stroke.toStr
         ? drawable._stroke.toStr()
-        : drawble._stroke;
+        : drawable._stroke;
       this._stroke = true;
     } else if (drawable._fill) {
       this.ctx.fillStyle = drawable._fill.toStr

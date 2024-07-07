@@ -1,0 +1,28 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Circle,
+        Random,
+        Vector2,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      let g = new Group().pos(new Vector2(0, 0));
+      let c = new Circle(g).radius(80).stroke(Pico8.RED).strokeWeight(5);
+      for (let i = 0; i < 15; i++) {
+        c = c.copy().move(new Vector2(45, 45));
+      }
+      g.copy().move(new Vector2(200, 0)).stroke(Pico8.GREEN);
+      g.copy().move(new Vector2(-200, 0)).stroke(Pico8.BLUE);
+      artworld.draw();
+    </script>
+  </body>
+</html>

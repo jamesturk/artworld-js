@@ -2,10 +2,26 @@ import { Vector2 } from "./math.js";
 import { Drawable } from "./drawable.js";
 import { Random } from "./random.js";
 
+function makeCopy(Cls, obj, override) {
+  // make new object, will be registered with world, but no _parent yet
+  let newObj = new Cls();
+  // overwrite fields of newObj with obj
+  Object.assign(newObj, obj, override);
+  // attach to parent
+  if (newObj._parent) {
+    newObj._parent.addChild(newObj);
+  }
+  return newObj;
+}
+
 export class Line extends Drawable {
   constructor(parent) {
     super(parent);
     this._offsetVec = new Vector2(10, 0);
+  }
+
+  copy(overrides) {
+    return makeCopy(Line, this, overrides);
   }
 
   draw() {
@@ -32,6 +48,9 @@ export class Arc extends Drawable {
     this._startAngle = 0;
     this._endAngle = 180;
   }
+  copy(overrides) {
+    return makeCopy(Arc, this, overrides);
+  }
 
   draw() {
     artworld.prepareDraw(this);
@@ -57,6 +76,9 @@ export class Circle extends Drawable {
     super(parent);
     this._r = 25;
   }
+  copy(overrides) {
+    return makeCopy(Circle, this, overrides);
+  }
 
   draw() {
     artworld.prepareDraw(this);
@@ -81,6 +103,9 @@ export class Rect extends Drawable {
     this._width = Random.between(20, range);
     this._height = Random.between(20, range);
     return this;
+  }
+  copy(overrides) {
+    return makeCopy(Rect, this, overrides);
   }
 
   draw() {

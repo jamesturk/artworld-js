@@ -3,6 +3,12 @@ import { Vector2 } from "./math.js";
 import { Color } from "./color.js";
 import { Random } from "./random.js";
 
+function cloneObject(obj) {
+  for (let [k, v] of Object.entries(obj)) {
+    console.log(k, v);
+  }
+}
+
 export class Drawable {
   constructor(parent) {
     this._parent = parent;
@@ -12,24 +18,18 @@ export class Drawable {
     this._strokeWeight = parent ? parent._strokeWeight : null;
     this._z_index = parent ? parent._z_index : null;
     this._posVec = new Vector2(0, 0);
-    this._register();
-  }
-
-  _register() {
     if (this._parent) {
-      this._parent._register(this);
+      this._parent.addChild(this);
     }
     artworld.register(this);
   }
 
   copy() {
-    let obj = Object.assign({}, this);
-    obj._register();
-    return obj;
+    throw new Error("copy() must be implemented on child class");
   }
 
   draw() {
-    // no-op, maybe log?
+    throw new Error("draw() must be implemented on child class");
   }
 
   // setters
@@ -73,6 +73,7 @@ export class Drawable {
 
   move(byVec) {
     this._posVec = this._posVec.add(byVec);
+    return this;
   }
 
   random() {
@@ -110,18 +111,52 @@ export class Group extends Drawable {
   }
 
   copy() {
-    let newobj = super.copy();
+    // new empty group
+    let newGroup = new Group();
+
     for (let child of this._children) {
-      let ccopy = Object.assign({}, child);
-      ccopy._parent = newobj;
-      ccopy._register();
+      // make a copy of each child item
+      // use child class copy, with forced override of group
+      // this registers each one as a child of newGroup
+      // as part of the copy behavior
+      child.copy({ _parent: newGroup });
     }
-    return newobj;
+
+    // attach own parent if present
+    if (this._parent) {
+      newGroup._parent = this._parent;
+      newGroup._parent.addChild(newGroup);
+    }
+
+    return newGroup;
   }
 
-  add(drawable) {
+  draw() {}
+
+  addChild(drawable) {
     this._children.push(drawable);
     drawable._parent = this;
+    return this;
+  }
+
+  fill(color) {
+    for (let child of this._children) {
+      child.fill(color);
+    }
+    return this;
+  }
+
+  stroke(color) {
+    for (let child of this._children) {
+      child.stroke(color);
+    }
+    return this;
+  }
+
+  strokeWeight(scalar) {
+    for (let child of this._children) {
+      child.strokeWeight(scalar);
+    }
     return this;
   }
 }
