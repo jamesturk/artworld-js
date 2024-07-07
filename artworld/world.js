@@ -1,7 +1,14 @@
+import { Timer } from "./timer.js";
+
 export class World {
   constructor() {
-    this.drawables = [];
     this.ctx = null;
+    this.drawables = [];
+    this.backgroundColor = "white";
+    this.timer = new Timer();
+    this.targetFrameRate = 60;
+    this.stepSize = 1000 / this.targetFrameRate;
+    this.lastTick = this.timer.time();
   }
 
   bindCanvas(id) {
@@ -16,14 +23,37 @@ export class World {
     return this.ctx.canvas.height;
   }
 
+  // TODO rename
   register(drawable) {
     this.drawables.push(drawable);
   }
 
   draw() {
+    this.ctx.fillStyle = "white";
+    this.ctx.beginPath();
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.fill();
     for (let d of this.drawables.sort((a, b) => a._z_index - b._z_index)) {
       d.draw();
     }
+  }
+
+  tick() {
+    for (let d of this.drawables) {
+      d.update();
+    }
+  }
+
+  loopStep() {
+    window.requestAnimationFrame(() => this.loopStep());
+
+    let curTime = this.timer.time();
+    // tick appropriate number of times
+    while (curTime - this.lastTick > this.stepSize) {
+      this.lastTick += this.stepSize;
+      this.tick();
+    }
+    this.draw();
   }
 
   // Canvas 2D /////////////////

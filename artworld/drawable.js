@@ -26,6 +26,9 @@ export class Drawable {
     throw new Error("draw() must be implemented on child class");
   }
 
+  // do nothing by default
+  update() {}
+
   // setters
 
   fill(color) {

@@ -1,0 +1,63 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Circle,
+        Random,
+        Vector2,
+        degToRad,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      class Ball extends Circle {
+        constructor() {
+          super();
+          this.speed = new Vector2(0, Random.between(9, 15));
+        }
+
+        update() {
+          this.move(this.speed);
+          if (this.worldPos.y > artworld.height + 20) {
+            this.y(-20);
+          }
+        }
+      }
+
+      class GravityBall extends Circle {
+        constructor() {
+          super();
+          this.accel = new Vector2(0, 0.5);
+          this.speed = Vector2.random(0, 5);
+        }
+
+        update() {
+          this.speed = this.speed.add(this.accel);
+          this.move(this.speed);
+          if (this.worldPos.y > artworld.height - 10) {
+            this.speed = this.speed.scale(-0.98); // bounce w/ dampening
+            this.y(artworld.height - 10.01);
+          }
+        }
+      }
+
+      for (let i = 0; i < 21; i++) {
+        new Ball()
+          .pos(new Vector2(40 * i, 0))
+          .radius(10)
+          .fill(Pico8.BLUE);
+        new GravityBall()
+          .pos(new Vector2(20 + 40 * i, 0))
+          .radius(10)
+          .fill(Pico8.PURPLE);
+      }
+      artworld.loopStep();
+    </script>
+  </body>
+</html>
