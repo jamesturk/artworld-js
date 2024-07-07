@@ -16,4 +16,8 @@ export class Random {
   static radians() {
     return Math.random() * Math.PI * 2;
   }
+
+  static choice(array) {
+    return array[Math.floor(Random.under(array.length))];
+  }
 }

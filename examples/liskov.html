@@ -1,0 +1,31 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Rect,
+        Arc,
+        Line,
+        Circle,
+        Random,
+        Vector2,
+        degToRad,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      let types = [Rect, Line, Circle, Arc];
+
+      for (let i = 0; i < 100; i++) {
+        let Cls = Random.choice(types);
+        new Cls().random().strokeWeight(2);
+      }
+      artworld.draw();
+    </script>
+  </body>
+</html>

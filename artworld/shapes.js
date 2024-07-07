@@ -24,9 +24,14 @@ export class Line extends Drawable {
     return makeCopy(Line, this, overrides);
   }
 
+  random(range = 100) {
+    super.random();
+    this._offsetVec = Vector2.random(range, range);
+    return this;
+  }
+
   draw() {
-    artworld.setStrokeColor(this._stroke);
-    artworld.setStrokeWeight(this._strokeWeight);
+    artworld.prepareDraw(this);
     artworld.drawLine(this.worldPos, this.worldPos.add(this._offsetVec));
   }
 
@@ -48,10 +53,18 @@ export class Arc extends Drawable {
     this._startAngle = 0;
     this._endAngle = 180;
   }
+
   copy(overrides) {
     return makeCopy(Arc, this, overrides);
   }
 
+  random(range = 100) {
+    super.random();
+    this._r = Random.between(20, range);
+    this._startAngle = Random.radians();
+    this._endAngle = Random.radians();
+    return this;
+  }
   draw() {
     artworld.prepareDraw(this);
     artworld.drawArc(this.worldPos, this._r, this._startAngle, this._endAngle);
@@ -80,6 +93,12 @@ export class Circle extends Drawable {
     return makeCopy(Circle, this, overrides);
   }
 
+  random(range = 100) {
+    super.random();
+    this._r = Random.between(20, range);
+    return this;
+  }
+
   draw() {
     artworld.prepareDraw(this);
     artworld.drawArc(this.worldPos, this._r, 0, 2 * Math.PI);
@@ -98,7 +117,7 @@ export class Rect extends Drawable {
     this._height = 50;
   }
 
-  random(range) {
+  random(range = 100) {
     super.random();
     this._width = Random.between(20, range);
     this._height = Random.between(20, range);

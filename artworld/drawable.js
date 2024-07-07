@@ -3,12 +3,6 @@ import { Vector2 } from "./math.js";
 import { Color } from "./color.js";
 import { Random } from "./random.js";
 
-function cloneObject(obj) {
-  for (let [k, v] of Object.entries(obj)) {
-    console.log(k, v);
-  }
-}
-
 export class Drawable {
   constructor(parent) {
     this._parent = parent;
