@@ -1,0 +1,29 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Rect,
+        Random,
+        Vector2,
+        Polygon,
+        degToRad,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      for (let i = 1; i < 8; i++) {
+        let p = new Polygon().random(3 + i);
+        let p2 = new Polygon().random(i * 10);
+        // p.animate("point", new_point, to_modify=e)
+      }
+
+      artworld.draw();
+    </script>
+  </body>
+</html>

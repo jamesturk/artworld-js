@@ -158,3 +158,67 @@ export class Rect extends Drawable {
   //   );
   // }
 }
+
+export class Polygon extends Drawable {
+  constructor(parent) {
+    super(parent);
+    this._points = [];
+  }
+
+  random(n = 7) {
+    super.random();
+    let points = [];
+    let i;
+    // generate points
+    for (i = 0; i < n; i++) {
+      points.push(
+        new Vector2(Random.between(50, 200), Random.between(50, 200)),
+      );
+    }
+    // sort points by distance for mostly convex (but not always) polygons
+    this._points.push(points.shift()); // take first element
+    while (points.length) {
+      let closestIdx = 0;
+      let closestDist = 999999999;
+      let dist;
+      for (let j = 0; j < points.length; j++) {
+        dist = this._points[this._points.length - 1].distance(points[j]);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIdx = j;
+        }
+      }
+      this._points.push(points[closestIdx]);
+      points.splice(closestIdx, 1);
+    }
+
+    return this;
+  }
+
+  copy(overrides) {
+    return makeCopy(Polygon, this, overrides);
+  }
+
+  draw() {
+    artworld.prepareDraw(this);
+    artworld.drawPolygon(this.worldPos, this._points);
+  }
+
+  point(vector, to_modify = null) {
+    if (to_modify !== null) {
+      self._points[to_modify] = vector;
+    } else {
+      self._points.push(point);
+    }
+    return self;
+  }
+  // TODO
+  // contains(x, y) {
+  //   return (
+  //     x > this.x &&
+  //     x < this.x + this._width &&
+  //     y > this.y &&
+  //     y < this.pos.y + this._height
+  //   );
+  // }
+}

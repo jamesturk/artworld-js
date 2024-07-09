@@ -27,6 +27,12 @@ export class Vector2 {
     return new Vector2(s * this.x, s * this.y);
   }
 
+  distance(other) {
+    return Math.sqrt(
+      Math.pow(this.x - other.x, 2) + Math.pow(this.y - other.y, 2),
+    );
+  }
+
   static random(x, y) {
     let theta = Random.radians();
     // if neither specified, use (1, 1)

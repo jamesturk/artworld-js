@@ -95,6 +95,17 @@ export class World {
     if (this._stroke) this.ctx.stroke();
     if (this._fill) this.ctx.fill();
   }
+
+  drawPolygon(center, points) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(center.x + points[0].x, center.y + points[0].y);
+    for (let i = 1; i < points.length; i++) {
+      this.ctx.lineTo(center.x + points[i].x, center.y + points[i].y);
+    }
+    this.ctx.lineTo(center.x + points[0].x, center.y + points[0].y);
+    if (this._stroke) this.ctx.stroke();
+    if (this._fill) this.ctx.fill();
+  }
 }
 
 // singleton (for now)
