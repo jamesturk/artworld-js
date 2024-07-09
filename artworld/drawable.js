@@ -12,6 +12,7 @@ export class Drawable {
     this._strokeWeight = parent ? parent._strokeWeight : null;
     this._z_index = parent ? parent._z_index : null;
     this._posVec = new Vector2(0, 0);
+    this._animations = [];
     if (this._parent) {
       this._parent.addChild(this);
     }
@@ -26,8 +27,16 @@ export class Drawable {
     throw new Error("draw() must be implemented on child class");
   }
 
-  // do nothing by default
-  update() {}
+  animate(setter, func, args) {
+    this._animations.push({ setter, func, args });
+    return this;
+  }
+
+  update(t) {
+    for (let anim of this._animations) {
+      this[anim.setter](anim.func(t), anim.args);
+    }
+  }
 
   // setters
 

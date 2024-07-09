@@ -1,0 +1,51 @@
+<html>
+  <head> </head>
+  <body>
+    <canvas id="mainCanvas" width="500" height="500"></canvas>
+    <script type="module">
+      import {
+        artworld,
+        Color,
+        Pico8,
+        Group,
+        Rect,
+        Random,
+        Vector2,
+        Line,
+        Circle,
+        degToRad,
+      } from "../artworld/index.js";
+      artworld.bindCanvas("mainCanvas");
+      window.artworld = artworld;
+
+      function colorFunc(t) {
+        return [Pico8.RED, Pico8.ORANGE, Pico8.GREEN, Pico8.BLUE][
+          Math.floor(t / 60) % 4
+        ];
+      }
+
+      function sizeFuncFactory(minSize, factor) {
+        return (t) => Math.sin(t / 100) * factor + minSize;
+      }
+
+      function timeAngle(t) {
+        return (t / 6000) * Math.PI * 2;
+      }
+
+      let g = new Group().pos(new Vector2(250, 250));
+      new Circle(g)
+        .fill(Pico8.BLACK)
+        .z(1)
+        .animate("radius", sizeFuncFactory(200, 50));
+      new Circle(g)
+        .z(10)
+        .animate("fill", colorFunc)
+        .animate("radius", sizeFuncFactory(190, 50));
+      new Circle(g).radius(20).fill(Pico8.BLACK).z(50);
+
+      new Line(g).to(Vector2.polar(200, 0)).z(100).animate("angle", timeAngle);
+
+      artworld.loopStep();
+    </script>
+  </body>
+</html>

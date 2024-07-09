@@ -206,11 +206,11 @@ export class Polygon extends Drawable {
 
   point(vector, to_modify = null) {
     if (to_modify !== null) {
-      self._points[to_modify] = vector;
+      this._points[to_modify] = vector;
     } else {
-      self._points.push(point);
+      this._points.push(point);
     }
-    return self;
+    return this;
   }
   // TODO
   // contains(x, y) {

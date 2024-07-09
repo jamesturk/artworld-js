@@ -33,6 +33,10 @@ export class Vector2 {
     );
   }
 
+  get magnitude() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
   static random(x, y) {
     let theta = Random.radians();
     // if neither specified, use (1, 1)

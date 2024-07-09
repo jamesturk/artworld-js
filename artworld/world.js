@@ -9,6 +9,7 @@ export class World {
     this.targetFrameRate = 60;
     this.stepSize = 1000 / this.targetFrameRate;
     this.lastTick = this.timer.time();
+    this.numTicks = 0;
   }
 
   bindCanvas(id) {
@@ -39,8 +40,9 @@ export class World {
   }
 
   tick() {
+    this.numTicks++;
     for (let d of this.drawables) {
-      d.update();
+      d.update(this.numTicks);
     }
   }
 
